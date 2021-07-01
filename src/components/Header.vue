@@ -48,8 +48,7 @@ export default {
 </script>
 <style lang="scss" scoped>
 header {
-  box-sizing: border-box;
-  padding: 1em;
+  padding: 2em;
   display: flex;
   justify-content: center;
   align-items: center;
@@ -60,6 +59,7 @@ header {
     position: relative;
     font-size: 1.5rem;
     margin-right: auto;
+    margin-left: 1em;
     z-index: 1001;
   }
 
