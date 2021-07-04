@@ -3,10 +3,14 @@
     <h3 class="logo">Vlog</h3>
     <nav class="nav">
       <ul class="nav__list">
-        <li><a href="#">Home</a></li>
-        <li><a href="#">About</a></li>
-        <li><a href="#">Profile</a></li>
-        <li><a href="#">Login</a></li>
+        <li><router-link to="/">Home</router-link></li>
+        <li><router-link to="/about">About</router-link></li>
+        <li v-if="!this.$store.state.status.loggedIn">
+          <router-link to="/login">Login</router-link>
+        </li>
+        <li v-if="this.$store.state.status.loggedIn">
+          <p @click="$store.dispatch('logout')">Logout</p>
+        </li>
       </ul>
       <div
         class="hamburger-menu"
@@ -21,16 +25,25 @@
       <div class="overlay" v-bind:class="{ overlay__open: hamburgerOpen }">
         <ul class="overlay__list">
           <li>
-            <a href="#" @click="hamburgerOpen = !hamburgerOpen">Home</a>
+            <router-link to="/" @click="hamburgerOpen = !hamburgerOpen"
+              >Home</router-link
+            >
           </li>
           <li>
-            <a href="#" @click="hamburgerOpen = !hamburgerOpen">About</a>
+            <router-link to="/about" @click="hamburgerOpen = !hamburgerOpen"
+              >About</router-link
+            >
           </li>
-          <li>
-            <a href="#" @click="hamburgerOpen = !hamburgerOpen">Profile</a>
+          <li v-if="!this.$store.state.status.loggedIn">
+            <router-link to="/login" @click="hamburgerOpen = !hamburgerOpen"
+              >Login</router-link
+            >
           </li>
-          <li>
-            <a href="#" @click="hamburgerOpen = !hamburgerOpen">Login</a>
+          <li
+            v-if="this.$store.state.status.loggedIn"
+            @click="hamburgerOpen = !hamburgerOpen"
+          >
+            <p @click="$store.dispatch('logout')">Logout</p>
           </li>
         </ul>
       </div>
@@ -68,6 +81,11 @@ header {
 
     a {
       text-decoration: none;
+    }
+
+    p {
+      text-decoration: none;
+      display: inline-block;
     }
 
     .nav__list {
