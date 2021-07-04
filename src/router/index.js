@@ -1,8 +1,11 @@
 import Vue from "vue";
+import Vuex from "vuex"
 import VueRouter from "vue-router";
 import Home from "../views/Home.vue";
+import store from './../store'
 
 Vue.use(VueRouter);
+Vue.use(Vuex)
 
 const routes = [
   {
@@ -13,18 +16,31 @@ const routes = [
   {
     path: "/about",
     name: "About",
-    // route level code-splitting
-    // this generates a separate chunk (about.[hash].js) for this route
-    // which is lazy-loaded when the route is visited.
     component: () =>
       import(/* webpackChunkName: "about" */ "../views/About.vue"),
+  },
+  {
+    path: "/login",
+    name: "Login",
+    component: () =>
+      import(/* webpackChunkName: "about" */ "../views/Login.vue"),
   },
 ];
 
 const router = new VueRouter({
   mode: "history",
   base: process.env.BASE_URL,
-  routes,
+  routes
 });
+
+router.beforeEach((to, from, next)=>{
+  const publicPages = ['/', '/about', '/login']
+  const authRequired = !publicPages.includes(to.path)
+  const loggedIn = store.state.status.loggedIn
+  if(authRequired && !loggedIn){
+    next('/')
+  } 
+  else {next()}
+})
 
 export default router;
