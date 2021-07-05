@@ -4,14 +4,12 @@
 
 <script>
 export default {
-    computed: {
-        username: function() {
-            return this.$store.getters.getUsername
-        }
-    }
-}
+  computed: {
+    username: function () {
+      return this.$store.getters.getUsername;
+    },
+  },
+};
 </script>
 
-<style>
-
-</style>
+<style></style>

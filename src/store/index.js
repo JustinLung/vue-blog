@@ -1,11 +1,11 @@
-import Vue from 'vue'
-import Vuex from 'vuex'
-import AuthService from "./../services/auth-service"
-import router from "./../router"
+import Vue from "vue";
+import Vuex from "vuex";
+import AuthService from "./../services/auth-service";
+import router from "./../router";
 
-Vue.use(Vuex)
+Vue.use(Vuex);
 
-const user = JSON.parse(localStorage.getItem('user'));
+const user = JSON.parse(localStorage.getItem("user"));
 const initialState = user
   ? { status: { loggedIn: true }, user }
   : { status: { loggedIn: false }, user: null };
@@ -14,37 +14,37 @@ const store = new Vuex.Store({
   state: initialState,
   mutations: {
     loginSuccess(state) {
-      state.status = {loggedIn: true}
+      state.status = { loggedIn: true };
     },
     loginFailed(state) {
-        state.status = {loggedIn: false}
+      state.status = { loggedIn: false };
     },
     logout(state) {
-        state.status = {loggedIn: false}
-    }
+      state.status = { loggedIn: false };
+    },
   },
   actions: {
-    login({commit}, {username, password}) {
-        AuthService.login(username, password).then(()=>{
-            commit('loginSuccess')
-            router.push("/")
-        }).catch(()=>{
-            commit('loginFailed')
+    login({ commit }, { username, password }) {
+      AuthService.login(username, password)
+        .then(() => {
+          commit("loginSuccess");
+          router.push("/");
         })
-      },
-      logout({commit}) {
-        AuthService.logout()
-        commit('logout')
-      },
-      register() {
-
-      }
+        .catch(() => {
+          commit("loginFailed");
+        });
+    },
+    logout({ commit }) {
+      AuthService.logout();
+      commit("logout");
+    },
+    register() {},
   },
   getters: {
     getUsername(state) {
-      return state.user.userInfo.username
-    }
-  }
-})
+      return state.user.userInfo.username;
+    },
+  },
+});
 
-export default store
+export default store;
