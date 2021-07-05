@@ -28,27 +28,12 @@
       </div>
       <div class="overlay" v-bind:class="{ overlay__open: hamburgerOpen }">
         <ul class="overlay__list">
-          <li>
-            <router-link to="/" @click="hamburgerOpen = !hamburgerOpen"
-              >Home</router-link
-            >
-          </li>
-          <li>
-            <router-link to="/about" @click="hamburgerOpen = !hamburgerOpen"
-              >About</router-link
-            >
-          </li>
-          <li v-if="!this.$store.state.status.loggedIn">
-            <router-link to="/login" @click="hamburgerOpen = !hamburgerOpen"
-              >Login</router-link
-            >
-          </li>
-          <li
-            v-if="this.$store.state.status.loggedIn"
-            @click="hamburgerOpen = !hamburgerOpen"
-          >
-            <p @click="$store.dispatch('logout')">Logout</p>
-          </li>
+        <li><router-link @click.native="hamburgerOpen = !hamburgerOpen" to="/">Homie</router-link></li>
+        <li><router-link @click.native="hamburgerOpen = !hamburgerOpen" to="/about">About</router-link></li>
+        <li><router-link @click.native="hamburgerOpen = !hamburgerOpen" to="/protected">Protected</router-link></li>
+        <li v-if="!this.$store.state.status.loggedIn"><router-link @click.native="hamburgerOpen = !hamburgerOpen" to="/login">Login</router-link></li>
+        <li><router-link @click.native="hamburgerOpen = !hamburgerOpen" to="/register">Register</router-link></li>
+        <li v-if="this.$store.state.status.loggedIn"><p @click="$store.dispatch('logout')">Logout</p></li>
         </ul>
       </div>
     </nav>
@@ -60,7 +45,7 @@ export default {
     return {
       hamburgerOpen: false,
     };
-  },
+  }
 };
 </script>
 <style lang="scss" scoped>

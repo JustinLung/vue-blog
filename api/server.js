@@ -53,11 +53,16 @@ app.post('/auth/login', (req, res) => {
 app.post('/auth/register', multipartyMiddleWare, (req, res) => {
     const username = req.body.username
     let password = req.body.password
-    console.log(req.files)
-    const image = req.files.image.path.split("uploads").pop()
+    let image;
+    if(req.files && Object.keys(req.files).length != 0) {
+        image = req.files.image.path.split("uploads\\").pop()
+    } else {
+        image = null
+    }
     const date = new Date()
     const mysqlDate = `${date.getFullYear()}-${date.getMonth()}-${date.getDate()}`
-
+    console.log("ja hier komt ie");
+    
 
     password = crypto.createHmac("sha256", "password")
         .update(password)
@@ -66,16 +71,20 @@ app.post('/auth/register', multipartyMiddleWare, (req, res) => {
     const hashedUsername = crypto.createHmac('sha1', 'username').update(username).digest('hex')
 
     const query = sql.query("INSERT INTO `user` VALUES(NULL, ?, ?, ?, ?, ?, 0)",
-        [username, password, image, mysqlDate, mysqlDate],
-        (err, result) => {
-            if (err) {
+    [username, password, image, mysqlDate, mysqlDate],
+    (err, result)=>{
+        if(err){
+            if(image) {
                 fs.unlinkSync(`./uploads/${image}`)
-                return res.send(err)
             }
-            if (!fs.existsSync(`./uploads/${hashedUsername}`)) fs.mkdirSync(`./uploads/${hashedUsername}`);
+            return res.send(err)
+        }
+        if(image) {
+            if(!fs.existsSync(`./uploads/${hashedUsername}`)) fs.mkdirSync(`./uploads/${hashedUsername}`);
             fs.renameSync(`./uploads/${image}`, `./uploads/${hashedUsername}/${image}`)
-            return res.send(result)
-        })
+        }
+        return res.send(result)
+    })
 })
 
 app.get("/test", (req, res) => {

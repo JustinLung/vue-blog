@@ -31,26 +31,29 @@ const store = new Vuex.Store({
           commit("loginSuccess", user);
           router.push("/");
         })
-        .catch(() => {
-          commit("loginFailed");
-        });
-    },
-    logout({ commit }) {
-      AuthService.logout();
-      commit("logout");
-      router.push("/");
-    },
-    register({ commit }, { username, password, image }) {
-      AuthService.register(username, password, image);
-      commit("loginFailed");
-    },
+      },
+      logout({commit}) {
+        AuthService.logout()
+        commit('logout')
+        router.push("/")
+      },
+      register({commit},{username, password, image}) {
+        AuthService.register(username, password, image).then(()=>{
+          commit('loginFailed')
+          router.push("/login")
+        })
+      }
   },
-  // getters: {
-  //   getUsername(state) {
-  //     console.log("wat?");
-  //     return state.user.userInfo.username
-  //   }
-  // }
-});
+  getters: {
+    getUsername(state) {
+      return state.user.userInfo.username
+    },
+    getProfilePictureSrc(state) {
+      const map = state.user.userInfo.hashedUsername
+      const file = state.user.userInfo.profile_picture
+      return file ? `${process.env.VUE_APP_API_URL}/image/${map}/${file}` : null
+    }
+  }
+})
 
 export default store;
