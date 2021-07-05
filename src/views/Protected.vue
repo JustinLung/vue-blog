@@ -1,7 +1,7 @@
 <template>
   <div>
       <h1>Hello {{ this.username }}!</h1>
-      <img :src="this.getProfileImage()" alt="">
+      <img :src="this.$store.getters.getProfilePictureSrc" alt="">
   </div>
 </template>
 
@@ -13,11 +13,7 @@ export default {
         }
     },
     methods: {
-        getProfileImage() {
-            const map = this.$store.state.user.userInfo.hashedUsername
-            const file = this.$store.state.user.userInfo.profile_picture
-            return `${process.env.VUE_APP_API_URL}/image/${map}/${file}`
-        }
+
     }
 }
 </script>

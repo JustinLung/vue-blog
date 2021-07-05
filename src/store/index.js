@@ -45,12 +45,16 @@ const store = new Vuex.Store({
         })
       }
   },
-  // getters: {
-  //   getUsername(state) {
-  //     console.log("wat?");
-  //     return state.user.userInfo.username
-  //   }
-  // }
+  getters: {
+    getUsername(state) {
+      return state.user.userInfo.username
+    },
+    getProfilePictureSrc(state) {
+      const map = state.user.userInfo.hashedUsername
+      const file = state.user.userInfo.profile_picture
+      return file ? `${process.env.VUE_APP_API_URL}/image/${map}/${file}` : null
+    }
+  }
 })
 
 export default store
