@@ -1,6 +1,6 @@
 <template>
-  <div class="wrapper">
-    <h1>Register</h1>
+  <div class="register-page">
+    <!-- <h1>Register</h1>
     <label for="username">Username</label>
     <input type="text" name="username" v-model="username" />
     <label for="password">Password</label>
@@ -13,6 +13,49 @@
     <p v-if="errors.length">Please correct the following error(s)</p>
     <div class="errors" v-for="error in errors" :key="error">
       <li>{{ error }}</li>
+    </div> -->
+    <div class="container-hero">
+      <div class="image-container">
+        <img src="../assets/login_image.svg" />
+        <h3>
+          Read and share blogpost <br />
+          across the globe.
+        </h3>
+      </div>
+    </div>
+
+    <div class="container-inputs">
+      <div class="wrapper">
+        <div class="text-container">
+          <h1>Get started.</h1>
+          <p>
+            Already have an account?
+            <router-link to="/login">Login</router-link>
+          </p>
+          <p>
+            <router-link to="/password">Forgot Password?</router-link>
+          </p>
+        </div>
+        <div class="form-container">
+          <label for="username">Username</label>
+          <input type="text" name="username" v-model="username" />
+          <label for="password">Password</label>
+          <input type="password" name="password" v-model="password" />
+          <label for="repeatedPassword">Repeat password</label>
+          <input
+            type="password"
+            name="repeatedPassword"
+            v-model="repeatedPassword"
+          />
+          <label for="image">Profile Picture (Not required)</label>
+          <input type="file" name="image" ref="file" @change="onFileChange" />
+          <p v-if="errors.length">Please correct the following error(s)</p>
+          <div class="errors" v-for="error in errors" :key="error">
+            <li>{{ error }}</li>
+          </div>
+          <button @click="checkForm" class="cta">Submit</button>
+        </div>
+      </div>
     </div>
   </div>
 </template>
@@ -84,18 +127,103 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-.wrapper {
+@import "@/scss/components/_buttons.scss";
+.register-page {
+  height: 90vh;
   display: flex;
-  flex-direction: column;
-  max-width: 300px;
-  margin: 0 auto;
-  input,
-  h1 {
-    margin-bottom: 20px;
+  flex-direction: row;
+  justify-content: center;
+
+  .container-hero {
+    flex: 1;
   }
-  input,
-  button {
-    padding: 10px 15px;
+  .image-container {
+    background-color: #35495e;
+    color: #fff;
+    height: 100%;
+    width: 100%;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
+    text-align: center;
+    img {
+      max-width: 50%;
+      max-height: 50%;
+    }
+
+    h3 {
+      margin-top: 2em;
+      font-size: 2rem;
+    }
+  }
+  .container-inputs {
+    flex: 1;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
+
+    .text-container {
+      margin-bottom: 0.8em;
+
+      p {
+        padding-top: 0.5em;
+      }
+    }
+
+    .form-container {
+      display: flex;
+      align-items: flex-start;
+      justify-content: center;
+      flex-direction: column;
+
+      input {
+        padding: 12px 20px;
+        width: 90%;
+        font-size: 1.2em;
+      }
+
+      label {
+        margin: 12px 0;
+      }
+
+      button {
+        margin: 2em auto;
+        font-size: 1em;
+      }
+    }
+  }
+
+  .errors {
+    color: #856404;
+    background-color: #fff3cd;
+    border-color: #ffeeba;
+
+    position: relative;
+    width: 100%;
+    padding: 0.3em;
+    border: 1px solid transparent;
+    border-radius: 0.25rem;
+  }
+}
+
+@media (max-width: 992px) {
+  .register-page {
+    flex-direction: column;
+
+    .container-hero {
+      display: none;
+    }
+
+    .container-inputs {
+      text-align: center;
+
+      .form-container {
+        align-items: center;
+      }
+    }
   }
 }
 </style>

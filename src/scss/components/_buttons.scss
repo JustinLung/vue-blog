@@ -1,0 +1,16 @@
+.cta {
+    all: unset;
+    background-color: #42b883;
+    color: #fff;
+    border-radius: 50px;
+    font-size: .8rem;
+    font-weight: 550;
+    text-align: center;
+    padding: 1em 3em;
+    transition: .3s ease-in-out;
+    cursor: pointer;
+    
+    &:hover {
+        transform: scale(1.1);
+    }
+}

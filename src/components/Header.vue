@@ -9,7 +9,9 @@
         <li v-if="!this.$store.state.status.loggedIn">
           <router-link to="/login">Login</router-link>
         </li>
-        <li><router-link to="/register">Register</router-link></li>
+        <li>
+          <router-link to="/register" class="cta">Get started</router-link>
+        </li>
         <li v-if="this.$store.state.status.loggedIn">
           <p @click="$store.dispatch('logout')">Logout</p>
         </li>
@@ -62,6 +64,7 @@ export default {
 };
 </script>
 <style lang="scss" scoped>
+@import "@/scss/components/_buttons.scss";
 header {
   padding: 2em;
   display: flex;
@@ -190,6 +193,10 @@ header {
       }
     }
   }
+}
+
+.cta {
+  padding: 1em 2em;
 }
 
 @media (max-width: 768px) {
