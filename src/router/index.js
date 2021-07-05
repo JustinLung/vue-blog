@@ -23,7 +23,19 @@ const routes = [
     path: "/login",
     name: "Login",
     component: () =>
-      import(/* webpackChunkName: "about" */ "../views/Login.vue"),
+      import(/* webpackChunkName: "login" */ "../views/Login.vue"),
+  },
+  {
+    path: "/protected",
+    name: "Protected",
+    component: () =>
+      import(/* webpackChunkName: "protected" */ "../views/Protected.vue"),
+  },
+  {
+    path: "/register",
+    name: "Register",
+    component: () =>
+      import(/* webpackChunkName: "register" */ "../views/Register.vue"),
   },
 ];
 
@@ -34,8 +46,8 @@ const router = new VueRouter({
 });
 
 router.beforeEach((to, from, next) => {
-  const publicPages = ["/", "/about", "/login"];
-  const authRequired = !publicPages.includes(to.path);
+  const privatePages = ["/protected"];
+  const authRequired = privatePages.includes(to.path);
   const loggedIn = store.state.status.loggedIn;
   if (authRequired && !loggedIn) {
     next("/");

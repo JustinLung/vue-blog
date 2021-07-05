@@ -1,6 +1,6 @@
 import axios from "axios";
 
-const API_URL = "http://localhost:3000";
+const API_URL = process.env.VUE_APP_API_URL;
 
 class AuthService {
   login(username, password) {
@@ -15,6 +15,16 @@ class AuthService {
 
   logout() {
     localStorage.removeItem("user");
+  }
+
+  register(username, password, image) {
+    const formData = new FormData();
+    formData.append("image", image);
+    formData.append("username", username);
+    formData.append("password", password);
+    return axios.post(`${API_URL}/auth/register`, formData).then((res) => {
+      return res.data;
+    });
   }
 }
 

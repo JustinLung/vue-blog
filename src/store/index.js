@@ -13,8 +13,9 @@ const initialState = user
 const store = new Vuex.Store({
   state: initialState,
   mutations: {
-    loginSuccess(state) {
+    loginSuccess(state, user) {
       state.status = { loggedIn: true };
+      state.user = user;
     },
     loginFailed(state) {
       state.status = { loggedIn: false };
@@ -26,8 +27,8 @@ const store = new Vuex.Store({
   actions: {
     login({ commit }, { username, password }) {
       AuthService.login(username, password)
-        .then(() => {
-          commit("loginSuccess");
+        .then((user) => {
+          commit("loginSuccess", user);
           router.push("/");
         })
         .catch(() => {
@@ -37,14 +38,19 @@ const store = new Vuex.Store({
     logout({ commit }) {
       AuthService.logout();
       commit("logout");
+      router.push("/");
     },
-    register() {},
-  },
-  getters: {
-    getUsername(state) {
-      return state.user.userInfo.username;
+    register({ commit }, { username, password, image }) {
+      AuthService.register(username, password, image);
+      commit("loginFailed");
     },
   },
+  // getters: {
+  //   getUsername(state) {
+  //     console.log("wat?");
+  //     return state.user.userInfo.username
+  //   }
+  // }
 });
 
 export default store;

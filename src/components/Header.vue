@@ -5,9 +5,11 @@
       <ul class="nav__list">
         <li><router-link to="/">Home</router-link></li>
         <li><router-link to="/about">About</router-link></li>
+        <li><router-link to="/protected">Protected</router-link></li>
         <li v-if="!this.$store.state.status.loggedIn">
           <router-link to="/login">Login</router-link>
         </li>
+        <li><router-link to="/register">Register</router-link></li>
         <li v-if="this.$store.state.status.loggedIn">
           <p @click="$store.dispatch('logout')">Logout</p>
         </li>
