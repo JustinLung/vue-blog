@@ -10,7 +10,8 @@ export default {
   computed: {
     username: function () {
       return this.$store.getters.getUsername;
-    },
+    }
+  },
     methods: {
 
     }
