@@ -39,8 +39,10 @@ const store = new Vuex.Store({
         router.push("/")
       },
       register({commit},{username, password, image}) {
-        AuthService.register(username, password, image)
-        commit('loginFailed')
+        AuthService.register(username, password, image).then(()=>{
+          commit('loginFailed')
+          router.push("/login")
+        })
       }
   },
   // getters: {
