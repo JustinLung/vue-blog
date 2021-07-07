@@ -170,6 +170,10 @@ export default {
 
       p {
         padding-top: 0.5em;
+
+        a {
+          color: #42b883;
+        }
       }
     }
 
@@ -219,6 +223,14 @@ export default {
 
     .container-inputs {
       text-align: center;
+
+      .wrapper {
+        .text-container {
+          h1 {
+            margin-top: 5rem;
+          }
+        }
+      }
 
       .form-container {
         align-items: center;
