@@ -58,7 +58,7 @@ app.post('/auth/login', (req, res) => {
             if (result.length == 0) return res.status(500).send({ error: 'user not found!' })
             const token = jwt.sign({
                 username: username
-            }, 'secret', { expiresIn: '10s' })
+            }, 'secret', { expiresIn: '1h' })
             result[0].hashedUsername = hashedUsername
             return res.send({
                 "userInfo": result[0],
