@@ -20,4 +20,11 @@ export default {
 @import "@/scss/abstracts/_mixins.scss";
 @import "@/scss/base/_global.scss";
 @import "@/scss/base/_typography.scss";
+
+#app {
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh;
+}
+
 </style>

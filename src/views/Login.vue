@@ -56,7 +56,7 @@ export default {
 <style lang="scss" scoped>
 @import "@/scss/components/_buttons.scss";
 .login-page {
-  height: 90vh;
+  flex: 1 1 auto;
   display: flex;
   flex-direction: row;
   justify-content: center;
