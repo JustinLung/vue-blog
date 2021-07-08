@@ -1,6 +1,7 @@
 import Vue from "vue";
 import Vuex from "vuex";
 import AuthService from "./../services/auth-service";
+// import jwtService from "../services/jwt-service";
 import router from "./../router";
 
 Vue.use(Vuex);
@@ -9,6 +10,7 @@ const user = JSON.parse(localStorage.getItem("user"));
 const initialState = user
   ? { status: { loggedIn: true }, user }
   : { status: { loggedIn: false }, user: null };
+  
 
 const store = new Vuex.Store({
   state: initialState,
@@ -29,19 +31,27 @@ const store = new Vuex.Store({
       AuthService.login(username, password)
         .then((user) => {
           commit("loginSuccess", user);
-          router.push("/");
+          if(router.currentRoute.path !== "/") router.push("/")
         })
       },
       logout({commit}) {
         AuthService.logout()
         commit('logout')
-        router.push("/")
+        if(router.currentRoute.path !== "/") router.push("/")
       },
       register({commit},{username, password, image}) {
         AuthService.register(username, password, image).then(()=>{
           commit('loginFailed')
           router.push("/login")
         })
+      },
+      async verify({commit}) {
+        const verified = await AuthService.verify(this.state.user)
+        if(!verified.status) {
+          commit('logout')
+          AuthService.logout()
+          if(router.currentRoute.path !== "/") router.push("/")
+        }
       }
   },
   getters: {

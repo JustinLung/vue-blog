@@ -10,6 +10,9 @@ export default {
   components: {
     Header,
   },
+  mounted: function() {
+    this.$store.dispatch("verify")
+  }
 };
 </script>
 <style lang="scss">

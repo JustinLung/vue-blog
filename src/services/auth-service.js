@@ -26,6 +26,12 @@ class AuthService {
       return res.data;
     });
   }
+
+  verify(user) {
+    return axios.post(`${API_URL}/auth/verify`, { user }).catch((err)=>{
+      return err
+    })
+  }
 }
 
 export default new AuthService();

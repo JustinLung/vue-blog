@@ -24,6 +24,23 @@ app.get('/image/:username/:id', (req, res) => {
     res.sendFile(`${__dirname}/uploads/${username}/${id}`)
 })
 
+app.post('/auth/verify', (req, res)=>{
+    const user = req.body.user
+    if(!user) {
+        return res.status(401).send({"error": "Auth failed"})
+    }
+    const token = user.accessToken
+
+    const decode = jwt.verify(token, 'secret', function(err, decode) {
+        if(err) {
+            return res.status(401).send({"error": "JWT Not valid or expired"})
+        } else {
+            return res.send(decode)
+        }
+    })
+
+})
+
 app.post('/auth/login', (req, res) => {
     const username = req.body.username
     let password = req.body.password
@@ -41,7 +58,7 @@ app.post('/auth/login', (req, res) => {
             if (result.length == 0) return res.status(500).send({ error: 'user not found!' })
             const token = jwt.sign({
                 username: username
-            }, 'secret', { expiresIn: '1h' })
+            }, 'secret', { expiresIn: '10s' })
             result[0].hashedUsername = hashedUsername
             return res.send({
                 "userInfo": result[0],
@@ -61,7 +78,6 @@ app.post('/auth/register', multipartyMiddleWare, (req, res) => {
     }
     const date = new Date()
     const mysqlDate = `${date.getFullYear()}-${date.getMonth()}-${date.getDate()}`
-    console.log("ja hier komt ie");
     
 
     password = crypto.createHmac("sha256", "password")

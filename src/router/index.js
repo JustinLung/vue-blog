@@ -49,8 +49,11 @@ router.beforeEach((to, from, next) => {
   const privatePages = ["/protected"];
   const authRequired = privatePages.includes(to.path);
   const loggedIn = store.state.status.loggedIn;
-  if (authRequired && !loggedIn) {
-    next("/");
+  if (authRequired) {
+    store.dispatch("verify")
+    if(!loggedIn) {
+      next("/");
+    }
   } else {
     next();
   }
