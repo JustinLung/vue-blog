@@ -1,11 +1,10 @@
 <template>
   <header>
-    <h3 class="logo">Vlog</h3>
+    <h3 class="logo"><router-link to="/">V-blog</router-link></h3>
     <nav class="nav">
       <ul class="nav__list">
-        <li><router-link to="/">Home</router-link></li>
         <li><router-link to="/about">About</router-link></li>
-        <li><router-link to="/protected">Protected</router-link></li>
+        <li><router-link to="/protected">Write</router-link></li>
         <li v-if="!this.$store.state.status.loggedIn">
           <router-link to="/login">Login</router-link>
         </li>
@@ -28,9 +27,8 @@
       </div>
       <div class="overlay" v-bind:class="{ overlay__open: hamburgerOpen }">
         <ul class="overlay__list">
-        <li><router-link @click.native="hamburgerOpen = !hamburgerOpen" to="/">Homie</router-link></li>
         <li><router-link @click.native="hamburgerOpen = !hamburgerOpen" to="/about">About</router-link></li>
-        <li><router-link @click.native="hamburgerOpen = !hamburgerOpen" to="/protected">Protected</router-link></li>
+        <li><router-link @click.native="hamburgerOpen = !hamburgerOpen" to="/protected">Write</router-link></li>
         <li v-if="!this.$store.state.status.loggedIn"><router-link @click.native="hamburgerOpen = !hamburgerOpen" to="/login">Login</router-link></li>
         <li><router-link @click.native="hamburgerOpen = !hamburgerOpen" to="/register">Register</router-link></li>
         <li v-if="this.$store.state.status.loggedIn"><p @click="$store.dispatch('logout')">Logout</p></li>
@@ -103,7 +101,7 @@ header {
 
       width: 100%;
       height: 100vh;
-      background: #282828;
+      background: #34495e;
 
       display: flex;
       align-items: center;
@@ -116,6 +114,10 @@ header {
         li {
           font-size: 2.5em;
           margin-left: 1em;
+          
+          a {
+            color: #fff !important;
+          }
         }
       }
     }

@@ -97,6 +97,10 @@ export default {
 
       p {
         padding-top: 0.5em;
+
+        a {
+          color: #42b883;
+        }
       }
     }
 
